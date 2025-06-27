@@ -1,23 +1,23 @@
-# 使用官方 ASP.NET 运行时镜像作为基础镜像
+# 使用官方 ASP.NET Core 运行时镜像
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
 EXPOSE 80
 
-# 使用 SDK 镜像进行构建
+# 使用 SDK 镜像构建项目
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
-# 把项目文件复制进去并还原依赖
+# 复制项目文件并还原依赖
 COPY AspNetMVCApp/AspNetMVCApp.csproj AspNetMVCApp/
 RUN dotnet restore AspNetMVCApp/AspNetMVCApp.csproj
 
-# 复制所有项目文件并编译发布
+# 复制所有源代码并发布
 COPY . .
 WORKDIR /src/AspNetMVCApp
-RUN dotnet publish -c Release -o /app/publishh
+RUN dotnet publish -c Release -o /publish
 
-# 构建最终镜像
+# 使用发布好的输出构建最终运行镜像
 FROM base AS final
 WORKDIR /app
-COPY --from=build /app/publish .
+COPY --from=build /publish .
 ENTRYPOINT ["dotnet", "AspNetMVCApp.dll"]
