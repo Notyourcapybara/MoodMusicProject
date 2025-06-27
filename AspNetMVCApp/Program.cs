@@ -1,4 +1,4 @@
-using MoodMusicProject; // 替换为你的 AppDbContext 命名空间
+using AspNetMVCApp; // 替换为你的 AppDbContext 命名空间
 using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
