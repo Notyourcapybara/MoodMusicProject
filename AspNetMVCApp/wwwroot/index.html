@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Mood Music Selector</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600&display=swap" rel="stylesheet">
+  <script src="js/getMoods.js" defer></script>
+</head>
+<body>
+  <header>
+    <h1>🎵 HOW ARE YOU FEELING TODAY</h1>
+  </header>
+
+  <section class="mood-grid">
+    <div class="mood-card happy" onclick="goToMood('happy')">
+      <div class="emoji">😊</div>
+      <div class="label">HAPPY</div>
+    </div>
+    <div class="mood-card sad" onclick="goToMood('sad')">
+      <div class="emoji">☹️</div>
+      <div class="label">SAD</div>
+    </div>
+    <div class="mood-card chill" onclick="goToMood('chill')">
+      <div class="emoji">😌</div>
+      <div class="label">CHILL</div>
+    </div>
+    <div class="mood-card energy" onclick="goToMood('energy')">
+      <div class="emoji">😃</div>
+      <div class="label">ENERGETIC</div>
+    </div>
+  </section>
+
+  <script>
+    function goToMood(mood) {
+      // 跳转到 MVC 控制器的 Playlist 视图
+      window.location.href = `/Mood/Playlist?mood=${mood}`;
+    }
+  </script>
+
+  <div class="more-container">
+      <button class="more-btn" onclick="location.href='more.html'">＋ More</button>
+  </div>
+  
+  <a class="manage-btn" href="/manage.html">⚙️ Manage</a>
+
+</body>
+</html>

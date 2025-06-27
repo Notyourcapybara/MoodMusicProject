@@ -1,0 +1,305 @@
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Mood Music Vibes</title>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="~/style.css" />
+  <style>
+    body {
+      font-family: 'Baloo 2', 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', 'Twemoji Mozilla', sans-serif;
+      background-color: #fffaf3;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+
+    header h1 {
+      margin: 30px 0 20px;
+      font-size: 2.5rem;
+      color: #333;
+      font-weight: 700;
+    }
+
+    .search-container {
+      margin: 10px auto 5px;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    #searchInput {
+      padding: 12px 16px;
+      width: 300px;
+      border-radius: 25px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+      outline: none;
+    }
+
+    #searchInput:focus {
+      border-color: #118ab2;
+    }
+
+    .search-container button {
+      background-color: #06d6a0;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .search-container button:hover {
+      background-color: #05c293;
+    }
+
+    #searchError {
+      color: red;
+      font-size: 14px;
+      margin-top: 5px;
+      font-weight: bold;
+    }
+
+    .mood-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 280px);
+      justify-content: center;
+      gap: 40px;
+      padding: 40px;
+    }
+
+    .mood-card {
+      width: 280px;
+      height: 210px;
+      border-radius: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      font-weight: bold;
+      font-size: 22px;
+      padding: 20px 0;
+      background-color: #ffffff;
+    }
+
+    .mood-card:hover {
+      transform: scale(1.05);
+    }
+
+    .emoji {
+      font-size: 64px;
+      margin-top: 30px;
+    }
+
+    .label {
+      font-size: 22px;
+      color: #333;
+      letter-spacing: 1px;
+      margin-bottom: 30px;
+    }
+
+    .more-container {
+      margin-top: 30px;
+    }
+
+    .more-btn {
+      background-color: #118ab2;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 12px 24px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .more-btn:hover {
+      background-color: #0d6fa1;
+    }
+
+    .manage-btn {
+      display: inline-block;
+      margin-top: 20px;
+      background-color: #ccc;
+      color: #333;
+      padding: 12px 24px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .manage-btn:hover {
+      background-color: #bbb;
+    }
+
+    /* Loader */
+    .loader {
+      position: fixed;
+      top: 45%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(255, 255, 255, 0.95);
+      padding: 30px 40px;
+      border-radius: 16px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      text-align: center;
+      z-index: 9999;
+    }
+
+    .loader.hidden {
+      display: none;
+    }
+
+    .spinner {
+      width: 48px;
+      height: 48px;
+      margin: 0 auto 12px;
+      border: 5px solid #ddd;
+      border-top: 5px solid #06d6a0;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    .loader-text {
+      font-weight: bold;
+      font-size: 16px;
+      color: #333;
+    }
+
+    @@keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🎵 HOW ARE YOU FEELING TODAY</h1>
+  </header>
+
+  <div class="search-container">
+    <input type="text" id="searchInput" placeholder="🔍 Search song title...">
+    <button onclick="handleSearch()">Search</button>
+  </div>
+  <p id="searchError"></p>
+
+  <section class="mood-grid" id="moodGrid">
+    <!-- Mood cards will be dynamically injected here -->
+  </section>
+
+  <div class="more-container">
+    <button class="more-btn" onclick="location.href='/more.html'">＋ More</button>
+  </div>
+
+  <a class="manage-btn" href="/manage.html">⚙️ Manage</a>
+
+  <!-- Loader -->
+  <div id="loader" class="loader hidden">
+    <div class="spinner"></div>
+    <div class="loader-text">🎵 LOADING...</div>
+  </div>
+
+  <script>
+    const loader = document.getElementById("loader");
+
+    function showLoader() {
+      loader.classList.remove("hidden");
+    }
+
+    function hideLoader() {
+      loader.classList.add("hidden");
+    }
+
+    function goToMood(mood) {
+      showLoader();
+      setTimeout(() => {
+        window.location.href = `/Mood/Playlist?mood=${mood}`;
+      }, 500);
+    }
+
+    function getColor(mood) {
+      const colors = {
+        happy: '#ffe282',
+        sad: '#d6d5f4',
+        chill: '#d6f4f0',
+        energy: '#ffd3d3'
+      };
+      return colors[mood] || '#f0f0f0';
+    }
+
+    function getEmoji(mood) {
+      const fixed = {
+        happy: '😊',
+        sad: '☹️',
+        chill: '😌',
+        energy: '😃'
+      };
+      return fixed[mood] || '🎧';
+    }
+
+    fetch("/Mood/GetAllMoods")
+      .then(res => res.json())
+      .then(moods => {
+        const grid = document.getElementById("moodGrid");
+        grid.innerHTML = "";
+
+        moods.forEach(raw => {
+          const mood = raw.trim().toLowerCase();
+          const label = mood.toUpperCase();
+
+          const card = document.createElement("div");
+          card.className = "mood-card";
+          card.style.backgroundColor = getColor(mood);
+          card.onclick = () => goToMood(mood);
+
+          card.innerHTML = `
+            <div class="emoji">${getEmoji(mood)}</div>
+            <div class="label">${label}</div>
+          `;
+
+          grid.appendChild(card);
+        });
+      })
+      .catch(() => {
+        document.getElementById("moodGrid").innerHTML = "<p>Failed to load moods.</p>";
+      });
+
+    function handleSearch() {
+      const keyword = document.getElementById("searchInput").value.trim();
+      const errorText = document.getElementById("searchError");
+      errorText.textContent = "";
+
+      if (!keyword) {
+        errorText.textContent = "Please enter a song title.";
+        return;
+      }
+
+      showLoader();
+
+      fetch(`/Mood/SearchSong?title=${encodeURIComponent(keyword)}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data.success && data.mood) {
+            window.location.href = `/Mood/Playlist?mood=${data.mood}&song=${encodeURIComponent(keyword)}`;
+          } else {
+            hideLoader();
+            errorText.textContent = "Oops! Not Exist! Use More to Add 🎧";
+          }
+        })
+        .catch(() => {
+          hideLoader();
+          errorText.textContent = "Something went wrong. Please try again.";
+        });
+    }
+  </script>
+</body>
+</html>

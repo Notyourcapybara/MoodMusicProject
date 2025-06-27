@@ -1,0 +1,152 @@
+/* 全局样式 */
+body {
+  font-family: 'Baloo 2', cursive;
+  background-color: #fffaf3;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+header h1 {
+  margin: 30px 0 20px;
+  font-size: 3rem;
+  color: #333;
+  font-weight: 700;
+}
+
+/* 心情卡片网格布局 */
+.mood-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 300px);
+  justify-content: center;
+  column-gap: 80px; /* 加大左右间距 */
+  row-gap: 50px;
+  padding: 30px;
+}
+
+/* 心情卡片样式（4:3 比例） */
+.mood-card {
+  width: 300px;
+  height: 225px;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  font-weight: bold;
+  font-size: 20px;
+  padding: 10px;
+  background-color: #ffffff;
+}
+
+.mood-card:hover {
+  transform: scale(1.05);
+}
+
+/* 表情和文字大小提升 */
+.emoji {
+  font-size: 64px;
+  margin-bottom: 10px;
+}
+
+.label {
+  font-size: 28px;
+  color: #333;
+  letter-spacing: 1px;
+  font-weight: 700;
+}
+
+/* 不同心情的背景色 */
+.happy {
+  background-color: #ffe282;
+}
+
+.sad {
+  background-color: #d6d5f4;
+}
+
+.chill {
+  background-color: #d6f4f0;
+}
+
+.energy {
+  background-color: #ffd3d3;
+}
+
+.more-btn {
+  margin-top: 40px;
+  background-color: #118ab2;
+  color: white;
+  font-size: 16px;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.more-btn:hover {
+  background-color: #0e6f90;
+}
+
+.manage-btn {
+  display: inline-block;
+  margin-top: 40px;
+  background-color: #ccc;
+  padding: 12px 24px;
+  border-radius: 15px;
+  color: #333;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+
+.manage-btn:hover {
+  background-color: #bbb;
+}
+
+/* 播放器样式（供 happy.html 等页面使用） */
+.player {
+  width: 350px;
+  margin: 50px auto;
+  background: #ffffff;
+  border-radius: 30px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  text-align: center;
+  font-family: 'Baloo 2', cursive;
+}
+
+.cover {
+  width: 100%;
+  border-radius: 20px;
+  margin-bottom: 15px;
+}
+
+.player h2 {
+  font-size: 22px;
+  margin: 10px 0 5px;
+  font-weight: 700;
+}
+
+.player h3 {
+  font-size: 18px;
+  margin: 0 0 20px;
+  font-weight: 400;
+}
+
+.controls button {
+  margin: 0 10px;
+  font-size: 28px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+#progress {
+  width: 100%;
+  margin-top: 15px;
+}
