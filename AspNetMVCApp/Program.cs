@@ -1,3 +1,7 @@
+using MoodMusicProject;
+using Microsoft.EntityFrameworkCore;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // 加入 MySQL 数据库支持
