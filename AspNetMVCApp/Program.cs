@@ -1,23 +1,14 @@
-using MoodMusicProject;
-using Microsoft.EntityFrameworkCore;
-using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
-
 var builder = WebApplication.CreateBuilder(args);
 
-// 加入 MySQL 数据库支持
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
-
-// Add services to the container.
+// 添加 MVC 控制器支持
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// 配置 HTTP 请求管道
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Mood/Error"); // 或自定义错误页
+    app.UseExceptionHandler("/Mood/Error");
     app.UseHsts();
 }
 
@@ -28,7 +19,7 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-// 🟢 设定默认控制器为 Mood，默认方法为 index
+// 默认路由设定：Mood 控制器 + Index 方法
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Mood}/{action=Index}/{id?}");
