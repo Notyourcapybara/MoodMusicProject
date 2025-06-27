@@ -1,5 +1,11 @@
-public class Mood
+namespace MoodMusicProject.Models
 {
-    public int Id { get; set; }
-    public string MoodName { get; set; }
+    public class Mood
+    {
+        public int Id { get; set; }
+        public string MoodName { get; set; }
+
+        // 新增的导航属性
+        public List<Song> Songs { get; set; }
+    }
 }
