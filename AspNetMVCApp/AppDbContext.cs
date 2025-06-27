@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using AspNetMVCApp.Models;
+using MoodMusicProject.Models;
 
 namespace AspNetMVCApp
 {
